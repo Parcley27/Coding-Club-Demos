@@ -37,7 +37,7 @@ try:
 except:
     pass  # Continue without icon if file not found
 
-# Defining colors (matching original snake game style)
+# Defining colors
 black = pygame.Color(0, 0, 0)
 white = pygame.Color(255, 255, 255)
 red = pygame.Color(255, 0, 0)
@@ -47,7 +47,7 @@ light_gray = pygame.Color(240, 240, 240)
 blue = pygame.Color(0, 100, 200)
 green = pygame.Color(0, 200, 0)
 
-# Define a function to get adjusted green color (from original game)
+# Define a function to get adjusted green color
 def adjusted_green_color(index):
     adjustedGreen = 165 + (index * 5)
     if adjustedGreen > 255:
