@@ -1,4 +1,4 @@
 // For school member privacy
-// Format:
+// member_info.csv format:
 // Email,First Name,Last Name,Best Score,Last Played
 *.csv
