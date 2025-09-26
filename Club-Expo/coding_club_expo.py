@@ -12,7 +12,7 @@ from datetime import datetime
 # Initialize pygame
 pygame.init()
 
-# Set grid dimensions in pixels (matching original snake game)
+# Set grid dimensions in pixels
 grid_width = 1200
 grid_height = 600
 
@@ -220,14 +220,13 @@ class Button:
         screen.blit(text_surface, text_rect)
 
 class SnakeGame:
-    """Enhanced Snake game based on the original with expo integration"""
-    
+    """Handles all snake game logic and rendering"""   
     def __init__(self):
         self.reset_game()
         self.highscore = 0
     
     def reset_game(self):
-        """Reset game to initial state (from original game)"""
+        """Reset game to initial state"""
         starting_x = 10 * square_size
         starting_y = 8 * square_size
         
@@ -243,7 +242,7 @@ class SnakeGame:
         self.game_over_state = False
     
     def generate_fruit(self):
-        """Generate fruit at random location not occupied by snake (from original)"""
+        """Generate fruit at random location not occupied by snake"""
         while True:
             new_position = [random.randrange(1, (grid_width // square_size)) * square_size,
                            random.randrange(1, (grid_height // square_size)) * square_size]
@@ -252,7 +251,7 @@ class SnakeGame:
                 return new_position
     
     def handle_input(self, event):
-        """Handle keyboard input with move queue system (from original)"""
+        """Handle keyboard input with move queue system"""
         if event.type == pygame.KEYDOWN:
             # Add inputs to the move queue
             if event.key == pygame.K_w or event.key == pygame.K_UP:
@@ -272,11 +271,11 @@ class SnakeGame:
                     self.move_queue.append('RIGHT')
     
     def update(self):
-        """Update game state each frame (from original game logic)"""
+        """Update game state each frame"""
         if self.game_over_state:
             return
         
-        # Process move queue (from original)
+        # Process move queue
         if self.move_queue:
             next_move = self.move_queue.pop(0)  # Take the first move in the queue
             if next_move == 'UP' and self.direction != 'DOWN':
@@ -288,7 +287,7 @@ class SnakeGame:
             elif next_move == 'RIGHT' and self.direction != 'LEFT':
                 self.direction = 'RIGHT'
         
-        # Move the snake (from original)
+        # Move the snake
         if self.direction == 'UP':
             self.snake_position[1] -= square_size
         elif self.direction == 'DOWN':
@@ -298,7 +297,7 @@ class SnakeGame:
         elif self.direction == 'RIGHT':
             self.snake_position[0] += square_size
         
-        # Snake body growing mechanism (from original)
+        # Snake body growing mechanism
         self.snake_body.insert(0, list(self.snake_position))
         if self.snake_position[0] == self.fruit_position[0] and self.snake_position[1] == self.fruit_position[1]:
             self.score += 1
@@ -310,7 +309,7 @@ class SnakeGame:
             self.fruit_position = self.generate_fruit()
         self.fruit_spawn = True
         
-        # Check for collisions (from original)
+        # Check for collisions
         if (self.snake_position[0] < 0 or self.snake_position[0] > grid_width - square_size or 
             self.snake_position[1] < 0 or self.snake_position[1] > grid_height - square_size):
             self.game_over_state = True
@@ -320,24 +319,24 @@ class SnakeGame:
                 self.game_over_state = True
     
     def draw(self, screen):
-        """Draw the game using original visual style"""
+        """Draw the game"""
         # Fill background
         screen.fill(white)
         
-        # Draw grid (from original)
+        # Draw grid
         for x in range(0, grid_width, square_size):
             for y in range(0, grid_height, square_size):
                 pygame.draw.rect(screen, gray, pygame.Rect(x, y, square_size, square_size), 1)
         
-        # Draw snake (from original with gradient colors)
+        # Draw snake with gradient effect
         for i, pos in enumerate(self.snake_body):
             color = dark_green if i == 0 else adjusted_green_color(i)
             pygame.draw.rect(screen, color, pygame.Rect(pos[0], pos[1], square_size, square_size))
         
-        # Draw fruit (from original)
+        # Draw fruit
         pygame.draw.rect(screen, red, pygame.Rect(self.fruit_position[0], self.fruit_position[1], square_size, square_size))
         
-        # Draw bottom info bar (from original style)
+        # Draw bottom info bar
         pygame.draw.rect(screen, white, pygame.Rect(0, grid_height, grid_width, 60))
         pygame.draw.line(screen, black, (0, grid_height), (grid_width, grid_height), 2)
 
@@ -515,11 +514,11 @@ class ExpoGameSystem:
             y_pos += 22
     
     def draw_game_screen(self):
-        """Draw the game screen using original game's drawing method"""
+        """Draw the game screen using last year's game's drawing method"""
         # Draw the snake game
         self.snake_game.draw(game_window)
         
-        # Draw score, controls, and player info in the bottom bar (original style)
+        # Draw score, controls, and player info in the bottom bar
         score_font = pygame.font.SysFont('Courier New', 20)
         
         # Player name
@@ -549,7 +548,7 @@ class ExpoGameSystem:
         highscore_surface = score_font.render(highscore_text, True, black)
         game_window.blit(highscore_surface, (750, window_height - 40))
         
-        # Game over overlay (matching original style)
+        # Game over overlay
         if self.snake_game.game_over_state:
             # White background box
             pygame.draw.rect(game_window, white, pygame.Rect((window_width / 2) - 300, (window_height / 2) - 200, 600, 400))
